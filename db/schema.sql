@@ -2,13 +2,14 @@ DROP DATABASE IF EXISTS employee_db;
 CREATE DATABASE employee_db;
 
 USE employee_db;
-
+-- Creates the Department Table
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title varchar (30),
     ON DELETE CASCADE
 );
 
+-- Creates the table for roles
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title varchar (30),
@@ -18,6 +19,8 @@ CREATE TABLE roles (
     REFERENCES (department_id),
     ON DELETE CASCADE
 );
+
+-- creates the employee table
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name varchar (30),
