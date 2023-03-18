@@ -103,34 +103,6 @@ function addDepartment() {
   });
     
 }
-// function addDepartment() {
-  
-//     inquirer
-//         .prompt([
-//             {
-//                 type: 'input',
-//                 name: 'department',
-//                 message: 'Add new department'
-
-
-//             }
-//         ])
-//         .then((data) => {
-//             let { departmant } = data;
-//         db.query(
-//           "INSERT INTO department SET ?",
-//           {
-//             dept_name: departmant,
-//           },
-//           function (err, results) {
-//             console.table(results);
-//             console.log("New Department added");
-//             questionPrompt();
-//           }
-//         );
-//         });
-// }
-
 
 function addRole() {
   db.query("SELECT * FROM department", function (err, results) {
