@@ -1,7 +1,8 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
 const mysql = require('mysql2');
-//const conTab = require('console.table');
+const { query } = require("express");
+const conTab = require('console.table');
 const db = require('./config/connection.js');
 
 // this function will initiate the prompt 
@@ -16,31 +17,31 @@ const questionPrompt = () => {
 ])
 // Switch statement for the user choices
     .then(choices => {
-        switch(choices.start) {
-            case 'View All Departments':
-                viewDepartments();
-                break;
-            case 'View All Roles':
-                viewRoles();
-                break;
-            case 'View All employees':
-                viewEmployees();
-                break;
-            case 'Add Department':
-                addDepartment();
-                break;
-            case 'Add Role':
-                addRole();
-                break;
-            case 'Add an Employee':
-                addEmployee();
-                break;
-            case 'Update Employee Role':
-                updateRole();
-                break;
-            case 'Exit':
-                db.end();
-                return
+        switch (choices.start) {
+          case "View All Departments":
+            viewDepartments();
+            break;
+          case "View All Roles":
+            viewRoles();
+            break;
+          case "View All Employees":
+            viewEmployees();
+            break;
+          case "Add a Department":
+            addDepartment();
+            break;
+          case "Add a Role":
+            addRole();
+            break;
+          case "Add an Employee":
+            addEmployee();
+            break;
+          case "Update an Employee Role":
+            updateRole();
+            break;
+          case "Exit":
+            db.end();
+            return;
         }
     })
 .catch((err) => {
@@ -66,40 +67,70 @@ function viewRoles() {
 }
 
 function viewEmployees() {
-    db.query ('SELECT * from employee', 
-    (err, results) => {
-        if (err)throw err;
-        console.table (results);
-        questionPrompt()
-    });
+  db.query("SELECT * from employee", (err, results) => {
+    if (err) throw err;
+    console.table(results);
+    questionPrompt();
+  });
 }
 
+
+// doesn't work
 function addDepartment() {
+  db.query("SELECT * FROM department", function (err, results) {
+    deptList = results.map((department) => {
+      return {
+        name: department.dept_name,
+        value: department.id,
+      };
+    });
     inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'department',
-                message: 'Add new department'
-
-
-            }
-        ])
-        .then((input) => {
-            let { departmantt } = input;
-        db.query(
-          "INSERT INTO department SET ?",
-          {
-            dept_name: departmantt,
-          },
-          function (err, results) {
-            console.table(results);
-            console.log("New Department added");
-            questionPrompt();
-          }
-        );
+      .prompt([
+        {
+          type: "input",
+          name: "dept_name",
+          message: "Add new department",
+        },
+      ])
+      .then((data) => {
+        const sql = `INSERT INTO department SET ?`;
+        db.query(sql, data, function (err, results) {
+          if (err) throw err;
+          console.log("New Department has been added.");
+          questionPrompt();
         });
+      });
+  });
+    
 }
+// function addDepartment() {
+  
+//     inquirer
+//         .prompt([
+//             {
+//                 type: 'input',
+//                 name: 'department',
+//                 message: 'Add new department'
+
+
+//             }
+//         ])
+//         .then((data) => {
+//             let { departmant } = data;
+//         db.query(
+//           "INSERT INTO department SET ?",
+//           {
+//             dept_name: departmant,
+//           },
+//           function (err, results) {
+//             console.table(results);
+//             console.log("New Department added");
+//             questionPrompt();
+//           }
+//         );
+//         });
+// }
+
 
 function addRole() {
   db.query("SELECT * FROM department", function (err, results) {
@@ -189,7 +220,7 @@ function addEmployee() {
             {
               first_name: firstName,
               last_name: lastName,
-              role_id: newEmp.employeeRole,
+              roles_id: newEmp.employeeRole,
               manager_Id: newEmp.empManager,
             },
             (err, results) => {

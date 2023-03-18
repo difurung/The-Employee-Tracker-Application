@@ -17,9 +17,9 @@ VALUES (1, 'Receptionist', 35000, 1),
        (8, 'Clinical Manager', 100000, 6);
 
 INSERT INTO employee (id, first_name, last_name, roles_id, manager_id) 
-VALUES (1, 'Denart', 'Ifurung', 5, null ),
+VALUES (1, 'Denart', 'Ifurung', 5, 6 ),
        (2, 'Edwin', 'Pietrowski', 3, 6 ),
-       (3, 'Charles', 'Beatty', 5, null ),
+       (3, 'Charles', 'Beatty', 5, 6 ),
        (4, 'Darren', 'Ifurung', 6, 6 ),
        (5, 'Yonatan', 'Bermudez', 4, 6 ),
        (6, 'Maria', 'Cruz', 2, 6),
