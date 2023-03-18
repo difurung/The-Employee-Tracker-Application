@@ -79,24 +79,24 @@ function addDepartment() {
         .prompt([
             {
                 type: 'input',
-                name: 'newDepartment',
+                name: 'department',
                 message: 'Add new department'
 
 
             }
         ])
         .then((input) => {
-            let { newDepartment } = input;
-        db.query (
-            'INSERT INTO department SET ?',
-            {
-                title: newDepartment
-            },
-            function (err, results) {
-                console.table(results);
-                console.log('New Department added');
-                questionPrompt();
-            }
+            let { departmantt } = input;
+        db.query(
+          "INSERT INTO department SET ?",
+          {
+            dept_name: departmantt,
+          },
+          function (err, results) {
+            console.table(results);
+            console.log("New Department added");
+            questionPrompt();
+          }
         );
         });
 }
@@ -105,7 +105,7 @@ function addRole() {
   db.query("SELECT * FROM department", function (err, results) {
     deptList = results.map((department) => {
       return {
-        name: department.title,
+        name: department.dept_name,
         value: department.id,
       };
     });

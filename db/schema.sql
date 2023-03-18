@@ -8,7 +8,7 @@ USE employee_db;
 -- Creates the Department Table
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar (30) NOT NULL
+    dept_name varchar (30) NOT NULL
     
 );
 
@@ -31,8 +31,8 @@ CREATE TABLE employee (
     last_name VARCHAR(30) NOT NULL,
     roles_id INT,
     -- CONSTRAINT fk_roles_id 
-    FOREIGN KEY(roles_id)
-    REFERENCES roles(id),
+    -- FOREIGN KEY(roles_id)
+    -- REFERENCES roles(id),
     -- ON DELETE CASCADE,
     manager_id INT
     -- CONSTRAINT fk_manager_id 
